@@ -1,0 +1,176 @@
+C51 COMPILER V9.59.0.0   CALCULATE                                                         06/21/2021 11:02:20 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE CALCULATE
+OBJECT MODULE PLACED IN .\Objects\calculate.obj
+COMPILER INVOKED BY: D:\keil_v5\C51\BIN\C51.EXE USER\calculate.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT
+                    -(.\Listings\calculate.lst) TABS(2) OBJECT(.\Objects\calculate.obj)
+
+line level    source
+
+   1          #include "main.h"
+   2          /*
+   3          **用后缀表达式来计算字符计算式
+   4          */
+   5          int debug;
+   6          
+   7          
+   8          
+   9          
+  10          int priority(char ch)
+  11          {
+  12   1        switch(ch)
+  13   1        {
+  14   2          case '(':
+  15   2            return 3;
+  16   2          case '*':
+  17   2          case '/':
+  18   2            return 2;
+  19   2          case '+':
+  20   2          case '-':
+  21   2            return 1;
+  22   2          default :
+  23   2            return 0;
+  24   2        }
+  25   1      }
+  26          
+  27          int StackInit(Stack **stack)
+  28          {
+  29   1        if(NULL == stack)
+  30   1        {
+  31   2          return FAILURE;
+  32   2        }
+  33   1        
+  34   1        *stack = (Stack *)malloc(sizeof(Stack)*1);
+  35   1        if(NULL == *stack)
+  36   1        {
+  37   2          return FAILURE;
+  38   2        }
+  39   1        
+  40   1        (*stack)->top = NULL;
+  41   1        (*stack)->count = 0;
+  42   1        
+  43   1        return SUCCESS;
+  44   1      }
+  45           
+  46          int StackEmpty(Stack *stack)
+  47          {
+  48   1        if(NULL == stack)
+  49   1        {
+  50   2          return FAILURE;
+  51   2        }
+  52   1        
+  53   1        return (stack->top == NULL) ? TRUE : FALSE;
+  54   1      }
+C51 COMPILER V9.59.0.0   CALCULATE                                                         06/21/2021 11:02:20 PAGE 2   
+
+  55           
+  56          int Push(Stack **stack, Elemtype e)
+  57          {
+  58   1        
+  59   1        Node *p;  
+  60   1        if(NULL == stack || NULL == *stack)
+  61   1        {
+  62   2          return FAILURE;
+  63   2        }
+  64   1        
+  65   1      
+  66   1        p = (Node *)malloc(sizeof(Node));
+  67   1        if(NULL == p)
+  68   1        {
+  69   2          return FAILURE;
+  70   2        }
+  71   1        
+  72   1        p->data_ = e;
+  73   1        p->next = (*stack)->top;
+  74   1        (*stack)->top = p;
+  75   1        (*stack)->count++;
+  76   1       
+  77   1        return SUCCESS; 
+  78   1      }
+  79           
+  80          int GetTop(Stack *stack)
+  81          {
+  82   1        if(NULL == stack)
+  83   1        {
+  84   2          return FAILURE;
+  85   2        }
+  86   1        
+  87   1        return stack->top->data_;
+  88   1      }
+  89           
+  90          int Pop(Stack **stack)
+  91          {
+  92   1        Elemtype e = (*stack)->top->data_;
+  93   1        Node *p = (*stack)->top;
+  94   1        if(NULL == stack || NULL == *stack)
+  95   1        {
+  96   2          return FAILURE;
+  97   2        }
+  98   1        (*stack)->top = (*stack)->top->next;
+  99   1        (*stack)->count--;
+ 100   1        free(p);
+ 101   1        p = NULL;
+ 102   1        
+ 103   1        return e;
+ 104   1      }
+ 105           
+ 106          int StackClear(Stack **stack)
+ 107          {
+ 108   1        
+ 109   1        Node *p;
+ 110   1        if(NULL == stack || NULL == *stack)
+ 111   1        {
+ 112   2          return FAILURE;
+ 113   2        }
+ 114   1        
+ 115   1      
+ 116   1        
+C51 COMPILER V9.59.0.0   CALCULATE                                                         06/21/2021 11:02:20 PAGE 3   
+
+ 117   1        while((*stack)->top != NULL)
+ 118   1        {
+ 119   2          p = (*stack)->top;
+ 120   2          (*stack)->top = (*stack)->top->next;
+ 121   2          (*stack)->count--;
+ 122   2          free(p);
+ 123   2        }
+ 124   1        return SUCCESS;
+ 125   1      }
+ 126           
+ 127          int StackDestory(Stack **stack)
+ 128          {
+ 129   1        Node *p;
+ 130   1        if(NULL == stack || NULL == *stack)
+ 131   1        {
+ 132   2          return FAILURE;
+ 133   2        }
+ 134   1        
+ 135   1      
+ 136   1        
+ 137   1        while((*stack)->top != NULL)
+ 138   1        {
+ 139   2          p = (*stack)->top;
+ 140   2          (*stack)->top = (*stack)->top->next;
+ 141   2          (*stack)->count--;
+ 142   2          free(p);
+ 143   2        }
+ 144   1        
+ 145   1        free(*stack);
+ 146   1        *stack = NULL;
+ 147   1        return SUCCESS;
+ 148   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1111    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2      37
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

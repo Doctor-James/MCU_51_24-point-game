@@ -1,0 +1,7 @@
+".\Objects\keyboard.obj",
+".\Objects\main.obj",
+".\Objects\system_init.obj",
+".\Objects\Lcd.obj",
+".\Objects\calculate.obj" 
+TO ".\Objects\zjl" 
+PRINT(".\Listings\zjl.m51") RAMSIZE(256) 
